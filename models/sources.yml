@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: demo_schema
+    database: demo
+    schema: demo_schema
+    description: data sources related to the snowflake & dbt course
+    tables:
+      - name: silver_weather
+      - name: bronze_bike_data
