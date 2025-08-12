@@ -6,5 +6,5 @@ sources:
     schema: demo_schema
     description: data sources related to the snowflake & dbt course
     tables:
-      - name: silver_weather
-      - name: bronze_bike_data
+      - name: weather_silver
+      - name: bikedata_raw
