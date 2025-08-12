@@ -1,16 +1,16 @@
 WITH CTE AS (
     SELECT TO_DATE(observation_time) as OBSERVATION_DATE,
-    description AS WEATHER_DESCRIPTION,
-    clouds,
+    weather_description,
+    cloud,
     humidity,
     temperature
-    FROM {{ source('demo_schema', 'silver_weather') }}
+    FROM {{ source('demo_schema', 'weather_silver') }}
 ),
 
 
 AVG_DAILY_WEATHER AS (
     SELECT observation_date,
-    AVG(clouds) AS AVG_CLOUDS,
+    AVG(cloud) AS AVG_CLOUDS,
     AVG(humidity) AS AVG_HUMIDITY,
     AVG(temperature) AS AVG_TEMPERATURE
     from CTE

@@ -1,8 +1,8 @@
-WITH bike_data AS (
+WITH CTE AS (
     SELECT *
-    FROM {{ source('demo_schema', 'bronze_bike_data') }}
+    FROM {{ source('demo_schema', 'bike_raw') }}
     LIMIT 10
 )
 
 SELECT *
-FROM bike_data;
+FROM CTE;

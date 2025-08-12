@@ -6,8 +6,7 @@ SELECT TO_TIMESTAMP(STARTED_AT) AS STARTED_AT,
     DAYNAME(TO_TIMESTAMP(STARTED_AT)) AS WEEKDAY_STARTED_AT,
     {{weekday_or_weekend('STARTED_AT')}} AS DAYTYPE_STARTED_AT,
     {{season('STARTED_AT')}} AS SEASON_STARTED_AT
-FROM {{ source('demo_schema', 'bronze_bike_data') }}
-LIMIT 5
+FROM {{ source('demo_schema', 'bike_raw') }}
 
 ) 
 

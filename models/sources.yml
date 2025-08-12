@@ -7,4 +7,4 @@ sources:
     description: data sources related to the snowflake & dbt course
     tables:
       - name: weather_silver
-      - name: bikedata_raw
+      - name: bike_raw
