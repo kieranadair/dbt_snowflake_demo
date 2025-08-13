@@ -54,7 +54,7 @@ ALL_STATIONS AS (
 
 SELECT MIN(station_name) AS station_name,
     station_id,
-    MIN(station_lat) AS station_lat,
-    MIN(station_lng) AS station_lng
+    AVG(station_lat) AS station_lat,
+    AVG(station_lng) AS station_lng
 FROM ALL_STATIONS
 GROUP BY station_id
