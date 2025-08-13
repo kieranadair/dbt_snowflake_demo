@@ -43,7 +43,7 @@ ALL_STATIONS AS (
     station_lng
     FROM START_STATIONS
     
-    UNION ALL
+    UNION
     
     SELECT station_name,
     station_id,
@@ -52,9 +52,9 @@ ALL_STATIONS AS (
     FROM END_STATIONS
 )
 
-SELECT station_name,
+SELECT MIN(station_name) AS station_name,
     station_id,
-    AVG(station_lat) as station_lat,
-    AVG(station_lng) as station_lon
+    MIN(station_lat) AS station_lat,
+    MIN(station_lng) AS station_lng
 FROM ALL_STATIONS
-GROUP BY station_name, station_id
+GROUP BY station_id
