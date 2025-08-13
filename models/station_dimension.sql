@@ -54,7 +54,7 @@ ALL_STATIONS AS (
 
 SELECT station_name,
     station_id,
-    station_lat,
-    station_lng
+    AVG(station_lat) as station_lat,
+    AVG(station_lng) as station_lon
 FROM ALL_STATIONS
-QUALIFY ROW_NUMBER() OVER (PARTITION BY station_id) = 1
+GROUP BY station_name, station_id
