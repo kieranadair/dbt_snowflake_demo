@@ -17,6 +17,10 @@ START_STATIONS AS (
     start_lat AS station_lat,
     start_lng AS station_lng
     FROM BIKE_RAW
+    WHERE start_station_name IS NOT NULL
+        AND start_station_id IS NOT NULL
+        AND start_lat IS NOT NULL
+        AND start_lng IS NOT NULL
 ),
 
 END_STATIONS AS (
@@ -26,9 +30,12 @@ END_STATIONS AS (
     end_lat AS station_lat,
     end_lng AS station_lng
     FROM BIKE_RAW
+    WHERE end_station_name IS NOT NULL
+        AND end_station_id IS NOT NULL
+        AND end_lat IS NOT NULL
+        AND end_lng IS NOT NULL
 ),
 
--- Union and dedupe both handled here
 ALL_STATIONS AS (
     SELECT station_name,
     station_id,
@@ -36,7 +43,7 @@ ALL_STATIONS AS (
     station_lng
     FROM START_STATIONS
     
-    UNION
+    UNION ALL
     
     SELECT station_name,
     station_id,
@@ -50,4 +57,4 @@ SELECT station_name,
     station_lat,
     station_lng
 FROM ALL_STATIONS
-
+QUALIFY ROW_NUMBER() OVER (PARTITION BY station_id) = 1
