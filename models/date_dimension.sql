@@ -1,15 +1,32 @@
-WITH DATE_TABLE AS (
+WITH bike_start_times AS (
 
-SELECT TO_TIMESTAMP(STARTED_AT) AS STARTED_AT,
-    DATE(TO_TIMESTAMP(STARTED_AT)) AS DATE_STARTED_AT,
-    HOUR(TO_TIMESTAMP(STARTED_AT)) AS  HOUR_STARTED_AT,
-    DAYNAME(TO_TIMESTAMP(STARTED_AT)) AS WEEKDAY_STARTED_AT,
-    {{weekday_or_weekend('STARTED_AT')}} AS DAYTYPE_STARTED_AT,
-    {{season('STARTED_AT')}} AS SEASON_STARTED_AT
-FROM {{ source('demo_schema', 'bronze_bike_data') }}
-LIMIT 5
+    SELECT started_at
+    FROM {{ source('demo_schema', 'bike_raw') }}
 
-) 
+),
 
-SELECT *
-FROM DATE_TABLE
+individual_dates AS (
+
+    SELECT DISTINCT DATE(started_at) AS date_started_at,
+    FROM bike_start_times
+
+),
+
+
+date_details AS (
+
+    SELECT date_started_at,
+        DAYNAME(date_started_at) AS weekday_started_at,
+        {{weekday_or_weekend('DATE_STARTED_AT')}} AS daytype_started_at,
+        {{season('DATE_STARTED_AT')}} AS season_started_at
+    FROM individual_dates
+
+)
+
+
+SELECT date_started_at,
+    weekday_started_at,
+    daytype_started_at,
+    season_started_at,
+FROM date_details
+ORDER BY date_started_at ASC
