@@ -1,12 +1,10 @@
 WITH bike_raw AS (
     
-    SELECT ride_id,
-        rideable_type,
-        started_at,
+    SELECT started_at,
         ended_at,
         start_station_id,
         end_station_id,
-        member_casual
+        user_type
     FROM {{ source("demo_schema", "bike_raw") }}
     LIMIT 10
 
@@ -14,9 +12,8 @@ WITH bike_raw AS (
 
 bike_transform AS (
 
-    SELECT ride_id,
-        rideable_type,
-        member_casual AS membership_type,
+    SELECT {{ dbt_utils.generate_surrogate_key(['started_at', 'ended_at', 'start_station_id', 'end_station_id']) }} AS ride_id,
+        user_type AS membership_type,
         TO_DATE(started_at) AS trip_date,
         TO_TIME(started_at) AS trip_time,
         start_station_id,
@@ -28,7 +25,6 @@ bike_transform AS (
 
 
 SELECT ride_id,
-    rideable_type,
     membership_type,
     trip_date,
     trip_time,
