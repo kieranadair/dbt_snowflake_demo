@@ -6,7 +6,6 @@ WITH bike_raw AS (
         end_station_id,
         user_type
     FROM {{ source("demo_schema", "bike_raw") }}
-    LIMIT 10
 
 ),
 
